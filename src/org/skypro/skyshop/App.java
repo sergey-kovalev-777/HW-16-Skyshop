@@ -3,7 +3,7 @@ package org.skypro.skyshop;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
-import org.skypro.skyshop.basket.ProductBasket;
+import skypro.skyshop.basket.ProductBasket;
 
 public class App {
     public static void main(String[] args) {
