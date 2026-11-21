@@ -1,53 +1,32 @@
 package org.skypro.skyshop;
 
-import org.skypro.skyshop.product.Product;
-import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
+import skypro.skyshop.basket.ProductBasket;
 
 public class App {
     public static void main(String[] args) {
-        Product p1 = new Product("Ноутбук", 50000);
-        Product p2 = new Product("Мышь", 1500);
-        Product p3 = new Product("Клавиатура", 3000);
-        Product p4 = new Product("Монитор", 20000);
-        Product p5 = new Product("Наушники", 2500);
-        Product p6 = new Product("Веб-камера", 4000); // лишний, чтобы проверить переполнение
-
         ProductBasket basket = new ProductBasket();
 
-        // 1. Добавление продукта в корзину
-        basket.addProduct(p1);
+        // 1. Добавляем обычный товар (НЕ специальный)
+        // Ожидается вывод просто имени в корзине
+        basket.addProduct(new SimpleProduct("Яблоко", 100));
+        basket.addProduct(new SimpleProduct("Банан", 150));
 
-        // 2. Добавление нескольких продуктов (чтобы занять почти всё)
-        basket.addProduct(p2);
-        basket.addProduct(p3);
-        basket.addProduct(p4);
-        basket.addProduct(p5);
+        // 2. Добавляем товар со скидкой (СПЕЦИАЛЬНЫЙ)
+        // Цена: 1000 - 20% = 800.
+        // Ожидается вывод: "Ноутбук: 800 (20%)"
+        basket.addProduct(new DiscountedProduct("Ноутбук", 1000, 20));
 
-        // 3. Добавление продукта в заполненную корзину
-        basket.addProduct(p6); // должно вывести: «Невозможно добавить продукт»
+        // 3. Добавляем товар с фиксированной ценой (СПЕЦИАЛЬНЫЙ)
+        // Цена: 999 (из константы).
+        // Ожидается вывод: "Мышка: Фиксированная цена 999"
+        basket.addProduct(new FixPriceProduct("Мышка"));
 
-        // 4. Печать содержимого корзины с несколькими товарами
-        basket.printBasket();
-
-        // 5. Получение стоимости корзины с несколькими товарами
-        System.out.println("Общая стоимость: " + basket.getTotalCost());
-
-        // 6. Поиск товара, который есть в корзине
-        System.out.println("Есть ли 'Клавиатура': " + basket.containsProductByName("Клавиатура"));
-
-        // 7. Поиск товара, которого нет в корзине
-        System.out.println("Есть ли 'Принтер': " + basket.containsProductByName("Принтер"));
-
-        // 8. Очистка корзины
-        basket.clear();
-
-        // 9. Печать содержимого пустой корзины
-        basket.printBasket();
-
-        // 10. Получение стоимости пустой корзины
-        System.out.println("Стоимость пустой корзины: " + basket.getTotalCost());
-
-        // 11. Поиск товара по имени в пустой корзине
-        System.out.println("Есть ли 'Ноутбук' в пустой корзине: " + basket.containsProductByName("Ноутбук"));
+        // 4. Вызываем новый метод печати
+        // Он должен вывести список товаров в нужном формате,
+        // общую сумму и количество специальных товаров.
+        basket.print();
     }
 }
